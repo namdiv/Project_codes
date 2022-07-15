@@ -82,7 +82,7 @@ from sqlalchemy import create_engine
 #database: taxis_nyc
 
 ssl_args = {'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'}}
-engine = create_engine('mysql://wdzwqbty2zdm:/taxis_nyc', connect_args=ssl_args)
+engine = create_engine('mysql://wdzwqbty2zdm:@hpsw9l5rkyvw.us-east-1.psdb.cloud/taxis_nyc', connect_args=ssl_args)
 
 
 df.to_sql('weather', con = engine, if_exists = 'replace')
