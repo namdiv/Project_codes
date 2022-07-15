@@ -193,5 +193,5 @@ mycursor = connection.cursor()
 
 for i in df_final.index.values:
     v = df_final.iloc[i].tolist()    
-    mycursor.execute(f'INSERT INTO taxi (index, VendorID, tpep_pickup_datetime, tpep_dropoff_datetime, passenger_count, trip_distance, RatecodeID, store_and_fwd_flag, PULocationID, DOLocationID, payment_type, fare_amount, extra, mta_max, tip_amount, improvement_surcharge, total_amount, fare_per_mile, trip_time, fare_per_minute) VALUES {v}')
+    mycursor.execute(f'INSERT INTO taxi (index, VendorID, tpep_pickup_datetime, tpep_dropoff_datetime, passenger_count, trip_distance, RatecodeID, store_and_fwd_flag, PULocationID, DOLocationID, payment_type, fare_amount, extra, mta_max, tip_amount, improvement_surcharge, total_amount, fare_per_mile, trip_time, fare_per_minute) VALUES ({v});')
 
