@@ -178,18 +178,20 @@ df['id_time_borough'] = df.tpep_pickup_datetime.dt.strftime('%Y%m%d%H') + df.id_
 df_final = df[(df.fare_amount > df.fare_amount.quantile(.05)) & (df.fare_amount < df.fare_amount.quantile(.95))]
 
 
+import pymysql
+connection = pymysql.connect{
+    host='hpsw9l5rkyvw.us-east-1.psdb.cloud',
+    user='pg3cl2vffprf',
+    passwd='',
+    database='taxis_nyc'
+    ssl = {'ca': '/etc/ssl//certs/ca-certificates.crt'}
 
-from sqlalchemy import create_engine
+}
+
+mycursor = connection.cursor()
 
 
-#Create connection
-# user:
-# password:
-#host: hpsw9l5rkyvw.us-east-1.psdb.cloud
-#database: taxis_nyc
+for i in df_final.index.values:
+    v = df_final.iloc[i].tolist()    
+    mycursor.execute(f'INSERT INTO taxi (index, VendorID, tpep_pickup_datetime, tpep_dropoff_datetime, passenger_count, trip_distance, RatecodeID, store_and_fwd_flag, PULocationID, DOLocationID, payment_type, fare_amount, extra, mta_max, tip_amount, improvement_surcharge, total_amount, fare_per_mile, trip_time, fare_per_minute) VALUES {v}')
 
-ssl_args = {'ssl_ca': '/etc/ssl/certs/ca-certificates.crt'}
-engine = create_engine('mysql://pg3cl2vffprf:@hpsw9l5rkyvw.us-east-1.psdb.cloud/taxis_nyc', connect_args=ssl_args)
-
-
-df_final.to_sql('weather', con = engine, if_exists = 'replace')
