@@ -70,3 +70,19 @@ df['id_time_borough'] = df.time.dt.strftime('%Y%m%d%H') + df.id_borough.astype(s
 ###############################################################33
 # tablas----> df y df_borough
 # queda hacer la conexion
+
+
+from sqlalchemy import create_engine
+
+
+#Create connection
+# user:
+# password:
+#host: hpsw9l5rkyvw.us-east-1.psdb.cloud
+#database: taxis_nyc
+
+ssl_args = {'ssl': {'ca': '/etc/ssl/certs/ca-certificates.crt'}}
+engine = create_engine('mysql://wdzwqbty2zdm:/taxis_nyc', connect_args=ssl_args)
+
+
+df.to_sql('weather', con = engine, if_exists = 'replace')
